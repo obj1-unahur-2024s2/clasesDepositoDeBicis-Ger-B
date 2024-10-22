@@ -1,11 +1,11 @@
 class Bicicleta{
   const rodado
-  const largo
+  const property largo
   const marca 
-  const accesorios
+  const property accesorios
 
   method marca() = marca  // Para que no moleste con que no uso marca
-  
+
   method altura() = rodado * 2.5 + 15
   method velocidadCrucero() = if(largo > 120) rodado + 6 else rodado + 2
   method carga() = accesorios.sum({a => a.carga()})
