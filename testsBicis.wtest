@@ -1,11 +1,12 @@
+import deposito.*
 import bicisYAccesorios.*
+const bici1 = new Bicicleta(rodado = 28, largo = 150, marca = 'Olmo', accesorios = [farolito])
+const bici2 = new Bicicleta(rodado = 26, largo = 110, marca = 'Legnano', accesorios = [farolito, canasto1, morral1])
+const canasto1 = new Canasto(volumen = 8)
+const morral1 = new Morral(largo = 21, tieneOjoDeGato = true)
+const bici3 = new Bicicleta(rodado = 20, largo = 90, marca = 'Legnano', accesorios = [morral2])
+const morral2 = new Morral(largo = 6, tieneOjoDeGato = false)
 describe "Test para bicis y accesorios" {
-  const bici1 = new Bicicleta(rodado = 28, largo = 150, marca = 'Olmo', accesorios = [farolito])
-  const bici2 = new Bicicleta(rodado = 26, largo = 110, marca = 'Legnano', accesorios = [farolito, canasto1, morral1])
-  const canasto1 = new Canasto(volumen = 8)
-  const morral1 = new Morral(largo = 21, tieneOjoDeGato = true)
-  const bici3 = new Bicicleta(rodado = 20, largo = 90, marca = 'Legnano', accesorios = [morral2])
-  const morral2 = new Morral(largo = 6, tieneOjoDeGato = false)
   test "bici1" {
     assert.equals(85, bici1.altura())
     assert.equals(34, bici1.velocidadCrucero())
@@ -29,5 +30,24 @@ describe "Test para bicis y accesorios" {
     assert.equals(11.2, bici3.peso())
     assert.notThat(bici3.tieneLuz())
     assert.equals(0, bici3.cantAccesoriosLivianos())
+  }
+}
+
+const deposito1 = new Deposito(bicis = [bici1, bici2, bici3])
+describe "Test para el deposito" {
+  test "Las vicis rapidas son la 1 y la 2" {
+    assert.equals([bici1, bici2], deposito1.bicisRapidas())
+  }
+  test "Las marcas presentes son Olmo y Legnano" {
+    assert.equals(#{'Olmo', 'Legnano'}, deposito1.marcasEnElDeposito())
+  }
+  test "El deposito no es nocturno" {
+    assert.notThat(deposito1.esNocturno())
+  }
+  test "Tiene bici para llevar 10 kg" {
+    assert.that(deposito1.hayBiciParaLlevar(10))
+  }
+  test "No tiene bici para llevar 50 kg" {
+    assert.notThat(deposito1.hayBiciParaLlevar(50))
   }
 }
